@@ -6,7 +6,7 @@ This project investigates forecasting the Hourly Ontario Electricity Price (HOEP
 
 The notebook below documents the initial stage of the project. It includes motivation, feature engineering, a theoretical understanding of forward propagation, early model architectures, and preliminary RMSE results.
 
-- [`HOEP_Modeling_Summary.ipynb`](./HOEP_Modeling_Summary.ipynb)
+- [`electricity_forecast_models.ipynb`](./electricity_forecast_models.ipynb)
 
 This is a **work in progress**, and further experiments, features, and model improvements are ongoing.
 
