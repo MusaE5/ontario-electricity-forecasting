@@ -1,0 +1,19 @@
+# Jupyter Notebook and Python garbage
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+*.log
+*.sqlite3
+*.db
+
+# Environment and dependency folders
+.env
+.venv/
+env/
+*.egg-info/
+*.pkl
+*.h5
+
+# OS & editor files
+.DS_Store
+.vscode/
