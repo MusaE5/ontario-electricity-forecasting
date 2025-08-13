@@ -1,46 +1,36 @@
-# Electricity Price Forecasting Using Neural Networks
+# Multi-Horizon Electricity Price Forecasting with Extreme Learning Machines
 
-This project investigates forecasting the Hourly Ontario Electricity Price (HOEP) using machine learning models, with a focus on neural networks. The goal is to model the complex, non-linear dynamics of HOEP using temporal, dispatch, and lag-based features, and compare performance against baseline linear models.
+A domain-informed approach to real-time electricity price forecasting using Extreme Learning Machines (ELM) for the Ontario electricity market.
 
-## Progress Summary
+## Overview
 
-The notebook below documents the initial stage of the project. It includes motivation, feature engineering, a theoretical understanding of forward propagation, early model architectures, and preliminary RMSE results.
+This repository implements a multi-horizon forecasting system that predicts electricity prices 1-3 hours ahead using publicly available data from Ontario's Independent Electricity System Operator (IESO). The system achieves 30% better accuracy than operational forecasts while maintaining sub-4ms inference latency on edge hardware.
 
-- [`electricity_forecast_models.ipynb`](./electricity_forecast_models.ipynb)
+## Key Features
 
-This is a **work in progress**, and further experiments, features, and model improvements are ongoing.
+- **Multi-horizon prediction**: Simultaneous forecasting of t+1, t+2, and t+3 hour electricity prices
+- **Edge deployment ready**: Sub-4ms inference on Raspberry Pi 4
+- **Domain-informed feature engineering**: 17 carefully selected features outperform 46+ feature approaches
+- **Efficient training**: 31× faster than LSTM baselines while achieving better accuracy
+- **Operational comparison**: Benchmarked against IESO's operational predispatch forecasts
 
-## Repository Structure
+## Key Results
 
-- `main_model_training.ipynb`: Implementation of data preprocessing, feature engineering, model training, and evaluation.
-- `HOEP_Modeling_Summary.ipynb`: Progress summary of modeling pipeline and initial results.
-- `data/`: Contains raw or processed data (not version-controlled if private).
-- `models/`: Directory for saved models (if applicable).
-- `README.md`: Project overview and documentation.
+- **20% RMSE improvement overall** agaisnt IESO Hour-1, 2, 3 predispatch forecasts
+- **2.3% better accuracy** than LSTM baseline with 31× faster training
+- **Sub-4ms inference** on Raspberry Pi 4 hardware
+- **17 features optimal** vs typical 46+ feature approaches in literature
 
-## Preliminary Results (RMSE)
+## Data Sources
 
-| Model                               | RMSE (CAD/MWh) |
-|------------------------------------|----------------|
-| LR: Demand only                    | 26.17          |
-| LR: + Datetime, Dispatch           | 46.62          |
-| NN (32→16→1): + Dispatch           | 27.95          |
-| NN (64→32→1): + Dispatch           | 31.79          |
-| LR: + Prev_HOEP                    | 44.65          |
-| NN (32→16→1): + Prev_HOEP          | 25.53          |
-| NN (64→32→1): + Prev_HOEP          | 26.57          |
-| NN (32→16→1): Multi-lag + MA       | 21.95          |
-| NN (64→32→1): Multi-lag + MA       | 14.46          |
+- **IESO**: Hourly Ontario Energy Price (HOEP), demand, and predispatch forecasts
+- **Temporal**: Calendar features with cyclical encoding
+- **Period**: 2014-2024 (train: 2014-2022, validation: 2023, test: 2024)
 
-## Environment
+## Model Architecture
 
-- Python 3.10+
-- TensorFlow 2.x
-- NumPy, Pandas, scikit-learn, Matplotlib
+- **Input**: 17 domain-selected features
+- **Hidden**: 500 ReLU nodes (single layer)
+- **Output**: 3 linear nodes (t+1, t+2, t+3 predictions)
+- **Training**: Moore-Penrose pseudoinverse (closed-form solution)
 
-## Planned Work
-
-- Add external signals (weather, gas prices, outages)
-- Integrate more historical and seasonal data
-- Experiment with sequential models (LSTM, Temporal CNNs)
-- Evaluate model generalization across seasons and years
